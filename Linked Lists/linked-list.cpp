@@ -166,7 +166,7 @@ int main(int argc, char const *argv[]) {
       while(choice != 0) {
             switch (choice) {
                   case 1:
-                        cout << "Inserting array elements" << endl;
+                        cout << "Inserting elements" << endl;
                         cout << "Enter the elements: " << endl;
                         for(int i = 0; i < size; i++) {
                               cin >> value;
@@ -188,7 +188,7 @@ int main(int argc, char const *argv[]) {
                         list.insertAtEnd(&list.head, value);
                         break;
                   case 4:
-                        cout << "Deletion of element" << endl;
+                        cout << "Insertion of element" << endl;
                         cout << "Enter a value: ";
                         cin >> value;
                         list.insertAtBeginning(&list.head, value);
