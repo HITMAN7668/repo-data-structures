@@ -166,30 +166,18 @@ public:
 
 int main(int argc, char const *argv[]) {
       cout << "------------------------------------------------------------------------" << endl;
-      // This Program function all the operations on the Array Class;
+      // This Program function implements all the operations on the Array Class;
       int size, value, choice, position;
       cout << "Enter the size for the array: ";
       cin >> size;
 
       Arrays arr(size);
 
-      cout << "Enter the following choices to proceed, else enter '0' to quit..." << endl;
       cout << "Enter 1 to fill " << size << " elements in the array." << endl;
-      cout << "Enter 2 to insert a new element at a specified position." << endl;
-      cout << "Enter 3 to delete an element with a provided value." << endl;
-      cout << "Enter 4 to delete an element with a provided position/index." << endl;
-      cout << "Enter 5 to find the location of an element by Linear Search" << endl;
-      cout << "Enter 6 to find the location of an element by Binary Search" << endl;
-      cout << "Enter 7 to perform a Bubbble sort on the array." << endl;
-      cout << "Enter 8 to display the array." << endl;
-      cout << "Enter 9 to clear the whole array" << endl;
       cin >> choice;
 
       while(choice != 0) {
             switch (choice) {
-                  case 0:
-                        cout << "You have quit the program... Thank you" << endl;
-                        break;
                   case 1:
                         cout << "Inserting array elements" << endl;
                         arr.insertElements();
