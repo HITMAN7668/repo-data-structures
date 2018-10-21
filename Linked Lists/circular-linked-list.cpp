@@ -4,17 +4,21 @@ using namespace std;
 struct node {
       int data;
       struct node *next;
+      struct node *prev;
 };
 
-class LinkedList {
+class DoublyLinkedList {
 public:
+      int size;
       struct node *head;
+      struct node *last;
 
-      LinkedList(int num) {
+      DoublyLinkedList(int num) {
             cout << "--------------------------------" << endl;
             cout << "Initialising List..." << endl;
+            this->size = num;
             this->head = NULL;
-            cout << "Linked list initialised" << endl;
+            cout << "Doubly-Linked list initialised" << endl;
             cout << "--------------------------------" << endl;
       }
 
@@ -24,7 +28,14 @@ public:
 
             newNode->data = data;
             newNode->next = (*head);
+            newNode->prev = NULL;
+
+            if((*head) != NULL) {
+                  (*head)->prev = newNode;
+            }
+
             (*head) = newNode;
+            this->last = newNode;
             cout << "--------------------------------" << endl;
       }
 
@@ -46,16 +57,27 @@ public:
             temp->data = value;
             temp->next = previous->next;
             previous->next = temp;
+            temp->prev = previous;
+
+            if(temp->next != NULL) {
+                  temp->next->prev = temp;
+            }
             cout << "--------------------------------" << endl;
       }
 
       void insertAtBeginning(struct node **head, int data) {
             cout << "--------------------------------" << endl;
-            struct node *temp = new struct node;
+            struct node *newNode = new struct node;
 
-            temp->data = data;
-            temp->next = (*head);
-            (*head) = temp;
+            newNode->data = data;
+            newNode->next = (*head);
+            newNode->prev = NULL;
+
+            if((*head) != NULL) {
+                  (*head)->prev = newNode;
+            }
+
+            (*head) = newNode;
             cout << "--------------------------------" << endl;
       }
 
@@ -68,6 +90,7 @@ public:
             temp->next = NULL;
 
             if((*head) == NULL) {
+                  temp->prev = NULL;
                   (*head) = temp;
                   return;
             }
@@ -77,100 +100,146 @@ public:
             }
 
             last->next = temp;
+            temp->prev = last;
+
             return;
             cout << "--------------------------------" << endl;
       }
 
       void deleteAnElement(struct node **head, int data) {
             cout << "--------------------------------" << endl;
-            struct node *temp = *head, *previous;
+            struct node *temp = (*head);
+            struct node *ptr;
 
-            if(temp != NULL && temp->data == data) {
-                  (*head) = temp->next;
-                  free(temp);
-                  return;
-            }
-
-            while(temp != NULL && temp->data != data) {
-                  previous = temp;
+            for(int i = 0; i < data && temp != NULL; i++) {
                   temp = temp->next;
             }
 
-            if(temp == NULL) {
-                  return;
-            }
+            if(data == 1) {
+                  if((*head) == NULL) {
+                        cout << "Operation can't be performed..." << endl;
+                  }
+                  else {
+                        ptr = (*head);
+                        (*head) = (*head)->next;
 
-            previous->next = temp->next;
-            free(temp);
+                        if((*head) != NULL) {
+                              (*head)->prev = NULL;
+                        }
+
+                        free(ptr);
+                  }
+            }
+            else if(temp != NULL) {
+                  temp->prev->next = temp->next;
+                  temp->next->prev = temp->prev;
+
+                  free(temp);
+            }
+            else if(data == last->data) {
+                  if(last == NULL) {
+                        cout << "Operation can't be performed..." << endl;
+                  }
+                  else {
+                        ptr = last;
+                        last = last->prev;
+
+                        if(last != NULL) {
+                              last->next = NULL;
+                        }
+
+                        free(ptr);
+                  }
+            }
+            else {
+                  cout << "Operation can't be performed..." << endl;
+            }
             cout << "--------------------------------" << endl;
       }
 
       void searchElement(struct node *head, int data) {
             cout << "--------------------------------" << endl;
-            struct node *temp = head;
             bool flag = false;
+            struct node *temp = head;
+
+            if(temp == NULL) {
+                  cout << "Operation can't be performed..." << endl;
+            }
 
             while(temp != NULL) {
                   if(temp->data == data) {
                         cout << "Element found" << endl;
                         flag = true;
+                        break;
                   }
+
                   temp = temp->next;
             }
 
-            if(flag == false) {
-                  cout << "Element not found" << endl;
+            if(flag = false) {
+                  cout << "Element wasn't found" << endl;
             }
             cout << "--------------------------------" << endl;
       }
 
       void printList(struct node *head) {
             cout << "--------------------------------" << endl;
+            struct node *last;
+
             while(head != NULL) {
                   cout << head->data << " ";
+                  last = head;
                   head = head->next;
             }
-            cout << endl;
-            cout << "--------------------------------" << endl;
+
+            cout << "\n--------------------------------" << endl;
       }
 
-      void deleteList(struct node **head) {
+      void deleteList(struct node **head, struct node *ptr) {
             cout << "--------------------------------" << endl;
-            struct node *current = (*head);
-            struct node *next;
-
-            while(current != NULL) {
-                  next = current->next;
-                  free(current);
-                  current = next;
+            if((*head) == NULL || ptr == NULL) {
+                  return;
             }
 
-            (*head) = NULL;
+            if((*head) == ptr) {
+                  (*head) = ptr->next;
+            }
+
+            if(ptr->next != NULL) {
+                  ptr->next->prev = ptr->prev;
+            }
+
+            if(ptr->prev != NULL) {
+                  ptr->prev->next = ptr->next;
+            }
+
+            free(ptr);
+            return;
             cout << "--------------------------------" << endl;
       }
 };
 
 int main(int argc, char const *argv[]) {
       cout << "--------------------------------" << endl;
-      // This Program function implements all the operations on the Linked List Class;
+      // This Program function implements all the operations on the Duubly Linked List Class;
       int size, value, choice, position;
 
-      cout << "Enter the size of the linked list: ";
+      cout << "Enter the size of the doubly-linked list: ";
       cin >> size;
 
-      LinkedList list(size);
+      DoublyLinkedList dlist(size);
 
-      cout << "Enter 1 to fill " << size << " elements in the linked list." << endl;
+      cout << "Enter 1 to fill " << size << " elements in the doubly-linked list." << endl;
       cin >> choice;
 
       while(choice != 0) {
             switch (choice) {
                   case 1:
-                        cout << "Inserting array elements" << endl;
+                        cout << "Inserting elements" << endl;
                         cout << "Enter the elements: " << endl;
                         for(int i = 0; i < size; i++) {
                               cin >> value;
-                              list.insertElements(&list.head, value);
+                              dlist.insertElements(&dlist.head, value);
                         }
                         break;
                   case 2:
@@ -179,38 +248,40 @@ int main(int argc, char const *argv[]) {
                         cin >> position;
                         cout << "Enter a value: ";
                         cin >> value;
-                        list.insertElementAfter(list.head, position, value);
+                        dlist.insertElementAfter(dlist.head, position, value);
                         break;
                   case 3:
                         cout << "Insertion of element" << endl;
                         cout << "Enter a value: ";
                         cin >> value;
-                        list.insertAtEnd(&list.head, value);
+                        dlist.insertAtEnd(&dlist.head, value);
                         break;
                   case 4:
-                        cout << "Deletion of element" << endl;
+                        cout << "Insertion of element" << endl;
                         cout << "Enter a value: ";
                         cin >> value;
-                        list.insertAtBeginning(&list.head, value);
+                        dlist.insertAtBeginning(&dlist.head, value);
                         break;
                   case 5:
                         cout << "Deleting..." << endl;
-                        cout << "Enter a value: ";
-                        cin >> value;
-                        list.deleteAnElement(&list.head, value);
+                        cout << "Enter a position: ";
+                        cin >> position;
+                        dlist.deleteAnElement(&dlist.head, position);
                         break;
                   case 6:
                         cout << "Performing Search \n Enter a value: " << endl;
                         cin >> value;
-                        list.searchElement(list.head, value);
+                        dlist.searchElement(dlist.head, value);
                         break;
                   case 7:
                         cout << endl;
-                        list.printList(list.head);
+                        dlist.printList(dlist.head);
                         break;
                   case 8:
                         cout << "------------------------->" << endl;
-                        list.deleteList(&list.head);
+                        for(int i = 0; i < size; i++) {
+                              dlist.deleteList(&dlist.head, dlist.head);
+                        }
                         break;
                   default:
                         cout << "Enter a valid value..." << endl;
@@ -223,8 +294,8 @@ int main(int argc, char const *argv[]) {
             cout << "Enter 4 to insert a new element at the beginning." << endl;
             cout << "Enter 5 to delete an element with a provided value." << endl;
             cout << "Enter 6 to search for an element" << endl;
-            cout << "Enter 7 to display the linked list." << endl;
-            cout << "Enter 8 to clear the whole linked list" << endl;
+            cout << "Enter 7 to display the doubly-linked list." << endl;
+            cout << "Enter 8 to clear the whole doubly-linked list" << endl;
             cout << "Enter 0 to quit" << endl;
             cin >> choice;
       }
