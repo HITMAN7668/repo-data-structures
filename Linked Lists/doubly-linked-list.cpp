@@ -221,13 +221,13 @@ public:
 
 int main(int argc, char const *argv[]) {
       cout << "--------------------------------" << endl;
-      // This Program function implements all the operations on the Duubly Linked List Class;
+      // This Program function implements all the operations on the Doubly Linked List Class;
       int size, value, choice, position;
 
       cout << "Enter the size of the doubly-linked list: ";
       cin >> size;
 
-      DoublyLinkedList dlist(size);
+      DoublyLinkedList dList(size);
 
       cout << "Enter 1 to fill " << size << " elements in the doubly-linked list." << endl;
       cin >> choice;
@@ -239,7 +239,7 @@ int main(int argc, char const *argv[]) {
                         cout << "Enter the elements: " << endl;
                         for(int i = 0; i < size; i++) {
                               cin >> value;
-                              dlist.insertElements(&dlist.head, value);
+                              dList.insertElements(&dList.head, value);
                         }
                         break;
                   case 2:
@@ -248,39 +248,39 @@ int main(int argc, char const *argv[]) {
                         cin >> position;
                         cout << "Enter a value: ";
                         cin >> value;
-                        dlist.insertElementAfter(dlist.head, position, value);
+                        dList.insertElementAfter(dList.head, position, value);
                         break;
                   case 3:
                         cout << "Insertion of element" << endl;
                         cout << "Enter a value: ";
                         cin >> value;
-                        dlist.insertAtEnd(&dlist.head, value);
+                        dList.insertAtEnd(&dList.head, value);
                         break;
                   case 4:
                         cout << "Insertion of element" << endl;
                         cout << "Enter a value: ";
                         cin >> value;
-                        dlist.insertAtBeginning(&dlist.head, value);
+                        dList.insertAtBeginning(&dList.head, value);
                         break;
                   case 5:
                         cout << "Deleting..." << endl;
                         cout << "Enter a position: ";
                         cin >> position;
-                        dlist.deleteAnElement(&dlist.head, position);
+                        dList.deleteAnElement(&dList.head, position);
                         break;
                   case 6:
                         cout << "Performing Search \n Enter a value: " << endl;
                         cin >> value;
-                        dlist.searchElement(dlist.head, value);
+                        dList.searchElement(dList.head, value);
                         break;
                   case 7:
                         cout << endl;
-                        dlist.printList(dlist.head);
+                        dList.printList(dList.head);
                         break;
                   case 8:
                         cout << "------------------------->" << endl;
                         for(int i = 0; i < size; i++) {
-                              dlist.deleteList(&dlist.head, dlist.head);
+                              dList.deleteList(&dList.head, dList.head);
                         }
                         break;
                   default:
