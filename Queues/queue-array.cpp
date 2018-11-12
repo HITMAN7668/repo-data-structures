@@ -18,7 +18,7 @@ int rear(struct node *ptr);
 void displayQueue(struct node *ptr);
 
 int main(int argc, char const *argv[]) {
-      // This program implements operations on Queue using linked lists
+      // This program implements operations on Queue using arrays
       struct node *queue;
       int size, value, choice;
 
